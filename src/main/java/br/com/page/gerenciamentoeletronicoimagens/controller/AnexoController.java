@@ -3,6 +3,9 @@ package br.com.page.gerenciamentoeletronicoimagens.controller;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.zip.ZipOutputStream;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +31,20 @@ public class AnexoController {
 		List<Anexo> anexos = uploadService.upload(Arrays.asList(request), cnpj);		
 		
 		return ResponseEntity.ok().body(anexos);
+	}
+	
+	
+	@RequestMapping(value = "/download/{cnpj}", method = RequestMethod.GET)
+	public void downloadleFiles(HttpServletResponse response, @PathVariable("cnpj") String cnpj) {
+		
+		response.setHeader("Content-Disposition", "attachment; filename=file.zip");
+		response.setHeader("Content-Type", "application/zip");
+		
+
+		ZipOutputStream zip = uploadService.download(cnpj);	
+		
+		System.out.println(zip);
+
 	}
 
 }
