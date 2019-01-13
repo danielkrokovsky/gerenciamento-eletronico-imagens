@@ -1,6 +1,7 @@
 package br.com.page.gerenciamentoeletronicoimagens.controller;
 
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.zip.ZipOutputStream;
@@ -16,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import br.com.page.gerenciamentoeletronicoimagens.UploadService;
 import br.com.page.gerenciamentoeletronicoimagens.model.Anexo;
+import br.com.page.gerenciamentoeletronicoimagens.service.UploadService;
 
 @RestController
 public class AnexoController {
@@ -34,16 +35,16 @@ public class AnexoController {
 	}
 	
 	
-	@RequestMapping(value = "/download/{cnpj}", method = RequestMethod.GET)
-	public void downloadleFiles(HttpServletResponse response, @PathVariable("cnpj") String cnpj) {
+	@RequestMapping(value = "/download/{cnpj}", method = RequestMethod.GET, produces="application/zip")
+	public void downloadleFiles(HttpServletResponse response, @PathVariable("cnpj") String cnpj) throws IOException {
 		
-		response.setHeader("Content-Disposition", "attachment; filename=file.zip");
-		response.setHeader("Content-Type", "application/zip");
+		response.setStatus(HttpServletResponse.SC_OK);
 		
-
-		ZipOutputStream zip = uploadService.download(cnpj);	
-		
-		System.out.println(zip);
+		String filename = cnpj.concat(".zip");
+		response.setHeader("Content-Disposition", "attachment; filename="+filename);
+		response.setHeader("Content-Type", "application/zip");		
+	    ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
+		uploadService.download(cnpj, zipOutputStream);	
 
 	}
 
