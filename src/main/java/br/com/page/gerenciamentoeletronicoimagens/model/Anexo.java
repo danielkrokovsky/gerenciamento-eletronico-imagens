@@ -25,9 +25,6 @@ public class Anexo {
 	@Column(name = "NOME_ARQUIVO")
 	private String nomeArquivo;
 
-	@Column(name = "NOME_ORIGINAL")
-	private String nomeOriginal;
-
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DATA_INCLUSAO")
 	private Date dataInclusao;
@@ -39,13 +36,6 @@ public class Anexo {
 	public Anexo nomeArquivo(String nomeArquivo) {
 
 		this.nomeArquivo = nomeArquivo;
-
-		return this;
-	}
-
-	public Anexo nomeOriginal(String nomeOriginal) {
-
-		this.nomeOriginal = nomeOriginal;
 
 		return this;
 	}

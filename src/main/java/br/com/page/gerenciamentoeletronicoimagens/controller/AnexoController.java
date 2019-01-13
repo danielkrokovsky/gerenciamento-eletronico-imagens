@@ -25,7 +25,7 @@ public class AnexoController {
 	
 	@Autowired
 	private UploadService uploadService;
-
+	
 	@RequestMapping(value = "/upload/{cnpj}", method = RequestMethod.POST)
 	public ResponseEntity<List<Anexo>> uploadMultipleFiles(@RequestParam("files")  MultipartFile[] request, @PathVariable("cnpj") String cnpj) {
 
@@ -39,13 +39,24 @@ public class AnexoController {
 	public void downloadleFiles(HttpServletResponse response, @PathVariable("cnpj") String cnpj) throws IOException {
 		
 		response.setStatus(HttpServletResponse.SC_OK);
-		
-		String filename = cnpj.concat(".zip");
-		response.setHeader("Content-Disposition", "attachment; filename="+filename);
+		response.setHeader("Content-Disposition", "attachment; filename="+cnpj.concat(".zip"));
 		response.setHeader("Content-Type", "application/zip");		
 	    ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
 		uploadService.download(cnpj, zipOutputStream);	
 
+	}
+	
+	
+	@RequestMapping(value = "/listarimagens/{cnpj}", method = RequestMethod.GET)
+	public ResponseEntity<List<Anexo>> listarImagens(@PathVariable("cnpj") String cnpj) throws IOException {
+		
+		return ResponseEntity.ok().body(uploadService.listarDados(cnpj));
+	}
+	
+	@RequestMapping(value = "/listarimagens/{nomearquivo}", method = RequestMethod.GET)
+	public ResponseEntity<List<Anexo>> downloadImagens(@PathVariable("nomearquivo") String nomearquivo) throws IOException {
+		
+		return ResponseEntity.ok().body(uploadService.listarDados(nomearquivo));
 	}
 
 }

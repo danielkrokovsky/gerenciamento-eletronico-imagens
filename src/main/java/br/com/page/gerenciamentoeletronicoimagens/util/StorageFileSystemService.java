@@ -1,13 +1,18 @@
 package br.com.page.gerenciamentoeletronicoimagens.util;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -84,6 +89,25 @@ public class StorageFileSystemService {
 		} else {
 			throw new ArquivoNaoEncontradoException();
 		}
+	}
+	
+	public void createZipFile(List<File> files, ZipOutputStream zipOutputStream) throws IOException {
+		files.stream().forEach(file -> {
+
+			try {
+				zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
+				FileInputStream fileInputStream = new FileInputStream(file);
+				IOUtils.copy(fileInputStream, zipOutputStream);
+				fileInputStream.close();
+				zipOutputStream.closeEntry();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				throw new ArquivoNaoEncontradoException();
+			}
+
+		});
+
+		zipOutputStream.close();
 	}
 
 }
