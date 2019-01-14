@@ -10,8 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
+import br.com.page.gerenciamentoeletronicoimagens.util.Utils;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
 
 @Data
 @Entity
@@ -31,6 +35,10 @@ public class Anexo {
 
 	@Column(name = "DIRETORIO")
 	private String diretorio;
+	
+	@Transient
+	@Getter(AccessLevel.PRIVATE)
+	private String path;
 	
 
 	public Anexo nomeArquivo(String nomeArquivo) {
@@ -57,6 +65,17 @@ public class Anexo {
 	public static Anexo builder() {
 
 		return new Anexo();
+	}
+	
+	public String getPath() {
+		
+		
+		if((diretorio == null && dataInclusao == null)) {
+			
+			path = diretorio.concat(Utils.diretorio(dataInclusao));
+		}
+		return path;
+		
 	}
 
 }

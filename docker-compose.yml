@@ -1,0 +1,15 @@
+version: '3'
+services:
+  gerenciador-imagens:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./war:/opt/apache-tomcat-8.5.14/webapps/
+
+    user: "root"
+
+networks:
+ gerenciador-imagens:
+  driver: bridge
+

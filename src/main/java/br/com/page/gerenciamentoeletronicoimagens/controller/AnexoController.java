@@ -53,10 +53,11 @@ public class AnexoController {
 		return ResponseEntity.ok().body(uploadService.listarDados(cnpj));
 	}
 	
+	/*
 	@RequestMapping(value = "/listarimagens/{nomearquivo}", method = RequestMethod.GET)
 	public ResponseEntity<List<Anexo>> downloadImagens(@PathVariable("nomearquivo") String nomearquivo) throws IOException {
 		
 		return ResponseEntity.ok().body(uploadService.listarDados(nomearquivo));
 	}
-
+	*/
 }
