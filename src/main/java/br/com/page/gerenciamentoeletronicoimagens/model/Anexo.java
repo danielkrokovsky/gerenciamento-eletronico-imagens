@@ -70,9 +70,9 @@ public class Anexo {
 	public String getPath() {
 		
 		
-		if((diretorio == null && dataInclusao == null)) {
+		if((diretorio != null && dataInclusao != null)) {
 			
-			path = diretorio.concat(Utils.diretorio(dataInclusao));
+			path = diretorio.concat(Utils.diretorio(dataInclusao)).concat(nomeArquivo);
 		}
 		return path;
 		
