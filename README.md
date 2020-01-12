@@ -14,7 +14,7 @@ Caso queira subir a aplicação via docker, seguir os seguintes passos:
   - estando na pasta raiz do projeto, executar o comando: docker build .
   - estando na pasta raiz do projeto, executar o comando: docker-compose up
   
-  Endpoits:
+  Endpoints:
     
   UPLOAD - http://localhost:8080/gerenciador/upload/{cnpj}
   
@@ -35,7 +35,7 @@ Tomcat
   - ir ao arquivo src/main/resources/application.properties, e alterar a propriedade root.locationUnix ou root.locationWin (de 	  acordo com o Sistema operacional), e adicionar o caminho da pasta criada.
   - Na pasta raiz do projeto, executar o comando: mvn spring-boot:run
   
-  Endpoits:
+  Endpoints:
   
   UPLOAD - http://localhost:9001/upload/{cnpj}
   
